@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.4/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.4/"></script>
+  <script src="./bundle.js"></script>
+  <script src="./states.json"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example Map</title>
+    <style>
+      html, body, #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+     <div id="viewDiv"></div>
+  </body>
+  <script>
+    require([
+      "esri/Map",
+      "esri/views/MapView",
+      "dojo/domReady!",
+      "dojo/request/xhr",
+    ], (Map, MapView, dom, xhr) => {
+      xhr("./states.json", {
+        handleAs: "json"
+      }).then( (data) => {
+        let states = data.map( item => `Show me ${item.state}`);
+        let grammar = '#JSGF V1.0; grammar states; public <state> = ' + states.join(' | ') + ' ;'
+        voiceControl = new window.voice({words, grammar})
+      })
+      let map = new Map({
+        container: "viewDiv",
+        basemap: "streets"
+      }),
+      view = new MapView({
+        container: "viewDiv",  // Reference to the scene div created in step 5
+        map: map,  // Reference to the map object created before the scene
+        zoom: 4,  // Sets zoom level based on level of detail (LOD)
+        center: [15, 65]  // Sets center point of view using longitude,latitude
+      }),
+      states = [],
+      voiceControl;
+    });
+  </script>
+</html>
