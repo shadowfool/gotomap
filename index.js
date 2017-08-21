@@ -15,7 +15,7 @@ function voice ( config ) {
 
 
   this.recognition.grammars = this.speechRecognitionList;
-  this.recognition.continuous = true;
+  this.recognition.continuous = config.continuous || true;
   this.recognition.lang = 'en-US';
   this.recognition.interimResults = false;
   this.recognition.maxAlternatives = 1;
