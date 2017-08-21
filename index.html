@@ -27,49 +27,6 @@
       "dojo/domReady!",
       "dojo/request/xhr",
     ], (Map, MapView, dom, xhr) => {
-
-
-      xhr("./states.json", {
-        handleAs: "json"
-      }).then( (data) => {
-        let states = data.map( item => `${item.state}`);
-        let grammar = '#JSGF V1.0; grammar states; public <state> = ' + states.join(' | ') + ' ;'
-        let voiceCommands = new window.voice({ grammar })
-        voiceCommands.start();
-        // function voice ( config ) {
-        //   console.log(config)
-        //   this.recognition = new SpeechRecognition();
-        //   this.speechRecognitionList = new SpeechGrammarList();
-        //   this.speechRecognitionList.addFromString(config.grammar, 1);
-
-
-        //   this.recognition.grammars = this.speechRecognitionList;
-        //   this.recognition.continuous = true;
-        //   this.recognition.lang = 'en-US';
-        //   this.recognition.interimResults = false;
-        //   this.recognition.maxAlternatives = 1;
-
-        //   this.recognition.onresult = (e) => {
-        //     console.log(e)
-        //    }
-
-        //   this.recognition.onaudioend = (e) => {
-        //     console.log(e)
-        //    }
-
-
-
-
-        //   this.start = () => {
-        //     this.recognition.start();
-        //   }
-
-        //   return this;
-        // }
-        // let a = new voice({ grammar })
-        // a.start();
-
-      })
       let map = new Map({
         container: "viewDiv",
         basemap: "streets"
@@ -80,8 +37,20 @@
         zoom: 4,  // Sets zoom level based on level of detail (LOD)
         center: [15, 65]  // Sets center point of view using longitude,latitude
       }),
-      states = [],
       voiceControl;
+
+      xhr("./convertedCountries.json", {
+        handleAs: "json"
+      }).then( (data) => {
+        let countries = Object.keys(data),
+        grammar = '#JSGF V1.0; grammar countries; public <state> = ' + countries.join(' | ') + ' ;',
+        // data = res.reduce( (acc, val) => {
+        //   acc[ val.state ] = val;
+        //   return acc;
+        // }, {}),
+        voiceCommands = new window.voice({ grammar, view, data });
+        voiceCommands.start();
+      });
 
 
     });
