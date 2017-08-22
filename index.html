@@ -42,13 +42,8 @@
       xhr("./convertedCountries.json", {
         handleAs: "json"
       }).then( (data) => {
-        let countries = Object.keys(data),
-        grammar = '#JSGF V1.0; grammar countries; public <state> = ' + countries.join(' | ') + ' ;',
-        // data = res.reduce( (acc, val) => {
-        //   acc[ val.state ] = val;
-        //   return acc;
-        // }, {}),
-        voiceCommands = new window.voice({ grammar, view, data });
+        let words = Object.keys(data);
+        voiceCommands = new window.voice({ words, view, data });
         voiceCommands.start();
       });
 
