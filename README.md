@@ -7,7 +7,7 @@ A simple module for integrating speech -> location on ESRI ArcGIS maps.
 Currently the module takes the following properties on the config
 
   ### config.data
-    ```javascript
+```javascript
       {
         "foo": {
           "latitude": number,
@@ -18,7 +18,7 @@ Currently the module takes the following properties on the config
           "longitude": number
         }
       }
-    ```
+```
 
   ### config.continuous
 
@@ -32,6 +32,5 @@ Defaults to true.
 An instance of an [argis MapView](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-MapView.html). Allows the module to access certian functions
 nessecary to control the extend of the view. 
 
-  ### config.grammar
-To be depricated because of complexity of the item but basically the grammar for the map.
-This should be initialized in the module. See index.html's script for how the grammar property is structured. 
+### config.words
+Array of words to be recognized by the api. Currently only supports countries + latlong paired with data in order to give programtic control of viewing certian points of interest in your map. Later will be built to be more robust and agnostic. 
